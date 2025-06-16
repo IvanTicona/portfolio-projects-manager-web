@@ -15,6 +15,7 @@ import api from "@/utils/api";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -30,7 +31,7 @@ export default function RegisterPage() {
     setLoading(true);
     setError(null);
     try {
-      await api.post("/register", { email, password });
+      await api.post("/auth/register", { name, email, password });
       router.push("/");
     } catch {
       setError("Error al registrar");
@@ -51,6 +52,14 @@ export default function RegisterPage() {
         </Typography>
 
         {error && <Alert severity="error">{error}</Alert>}
+
+        <TextField
+          label="Nombre"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
         <TextField
           label="Email"
